@@ -8,8 +8,21 @@ const SingleItem = ({ item }) => {
 
   const {mutate:updateTask, isLoading} = useMutation({
     mutationFn: (item) => {
-      console.log('item ', item);
       customFetch.patch(`/${item.id}`, { isDone: !item.isDone })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks']});
+      toast.success(' task updated')
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error(error.response.data.msg)
+    }
+  })
+
+  const {mutate:deleteTask, isDeleting} = useMutation({
+    mutationFn: (taksId) => {
+      customFetch.delete(`/${taksId}`)
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks']});
@@ -23,8 +36,11 @@ const SingleItem = ({ item }) => {
 
 
   const handleChange = ({item}) => {
-
     updateTask(item)
+  };
+
+  const handleDelete = (taskId) => {
+    deleteTask(taskId)
   };
 
   return (
@@ -45,7 +61,8 @@ const SingleItem = ({ item }) => {
       <button
         className='btn remove-btn'
         type='button'
-        onClick={() => console.log('delete task')}
+        disabled={isDeleting}
+        onClick={() => handleDelete(item.id)}
       >
         delete
       </button>

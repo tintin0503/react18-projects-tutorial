@@ -23,8 +23,6 @@ const Items = ({ items }) => {
 //     return <p style={{ marginTop: '1rem'}}>There was an error: {error.response.data}</p>
 //   }
 
-  console.log('dadadad ', data)
-
   return (
     <div className='items'>
       {data.taskList.map((item) => {
