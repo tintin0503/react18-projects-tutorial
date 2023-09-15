@@ -6,12 +6,11 @@ export const useFetchTasks = () => {
   const { isLoading, data, isError, error } = useQuery({
     queryKey: ['tasks'],
     queryFn: async () => {
-        const { data } = await customFetch.get('/');
-        return data
+      const { data } = await customFetch.get('/');
+      return data
     }
-    })
-
-    return { data, isError, isLoading }
+  })
+  return { data, isError, isLoading }
 }
 
 export const useEditTask = () => {

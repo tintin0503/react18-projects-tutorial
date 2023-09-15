@@ -1,16 +1,9 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import customFetch from './utils';
-import { toast } from 'react-toastify';
 import { useCreateTask } from './reactQueryCustomHooks';
 
 const Form = () => {
   const [newItemName, setNewItemName] = useState('');
-
   const {createTask, isLoading } = useCreateTask();
-
-
-
 
   const handleSubmit = (e) => {
     e.preventDefault();

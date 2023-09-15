@@ -10,10 +10,6 @@ const Items = () => {
   if (isError) {
     return <p style={{ marginTop: '1rem'}}>There was an error...</p>
   }
-// console.log(error)
-//   if (error) {
-//     return <p style={{ marginTop: '1rem'}}>There was an error: {error.response.data}</p>
-//   }
 
   return (
     <div className='items'>
