@@ -1,42 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import customFetch from "./utils";
 import { toast } from "react-toastify";
+import { useDeleteTask, useEditTask } from "./reactQueryCustomHooks";
 
 const SingleItem = ({ item }) => {
 
-  const queryClient = useQueryClient()
-
-  const {mutate:updateTask, isLoading} = useMutation({
-    mutationFn: (item) => {
-      customFetch.patch(`/${item.id}`, { isDone: !item.isDone })
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks']});
-      toast.success(' task updated')
-    },
-    onError: (error) => {
-      console.log(error);
-      toast.error(error.response.data.msg)
-    }
-  })
-
-  const {mutate:deleteTask, isDeleting} = useMutation({
-    mutationFn: (taksId) => {
-      customFetch.delete(`/${taksId}`)
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks']});
-      toast.success(' task updated')
-    },
-    onError: (error) => {
-      console.log(error);
-      toast.error(error.response.data.msg)
-    }
-  })
-
+ const {deleteTask, isDeleting} = useDeleteTask()
+ const {editTask} = useEditTask()
 
   const handleChange = ({item}) => {
-    updateTask(item)
+    editTask(item)
   };
 
   const handleDelete = (taskId) => {
